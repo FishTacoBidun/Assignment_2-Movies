@@ -15,7 +15,7 @@ struct movie
   char languages[MAX];
   double rating;
   
-  movie* next
+  movie* next;
 }
 
 //function definitions
@@ -146,13 +146,14 @@ int menu(void)
 //show movies released in the specified year
 void specifiedYear(movie** head, int size)
 {
-  movie* curr = head
+  movie* curr = *head
   int year;
   bool ifMovie = false;
 
   printf("Enter the year for which you want to see movies: ");
   scanf("%d", &year);
 
+  //loop through the list
   for(int i = 0; i < size; i++)
   {
     if(curr.year == year)
@@ -164,6 +165,7 @@ void specifiedYear(movie** head, int size)
     }
   }
 
+  //check if there are no movies for the users year
   if(ifMovie == false)
   {
     printf("No data about movies released in the year %d\n", year);
