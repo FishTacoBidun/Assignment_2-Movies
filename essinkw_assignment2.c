@@ -73,7 +73,7 @@ int processMovieFile(char* filePath, movie** head)
 
   FILE* movieFile = fopen(filePath, "r");
   if (!movieFile) {
-      perror("Error opening file");
+      printf("Error opening file");
       return 0;
   }
 
