@@ -4,24 +4,30 @@
 #include <math.h>
 
 //constants
+int MAX = 256;
 
 //linked list
 struct Node
 {
-  //values
-  char title[100];
+  //movie values
+  char title[MAX];
   int year;
-  char languages[100];
+  char languages[MAX];
   double rating;
   
   Node* next
 }
 
 //function definitions
-
+void fillList();
 
 int main(void)
 {
+  //variables
+  Node* head = NULL;
+  int size;
 
   return 0;
 }
+
+void fillList();
