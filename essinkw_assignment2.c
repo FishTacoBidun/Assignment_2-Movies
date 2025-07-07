@@ -19,7 +19,7 @@ struct Node
 }
 
 //function definitions
-void fillList();
+int processMovieFile(char* filePath);
 
 int main(void)
 {
@@ -30,4 +30,9 @@ int main(void)
   return 0;
 }
 
-void fillList();
+//fills linked list with movie data and prints out some information
+//Uses code from movies.c example code
+int processMovieFile(char* filePath)
+{
+
+}
