@@ -160,9 +160,10 @@ void specifiedYear(movie** head, int size)
     {
       printf("%s\n", curr.title);
 
-      curr = curr->next;
       ifMovie = true;
     }
+    
+    curr = curr->next;
   }
 
   //check if there are no movies for the users year
@@ -181,7 +182,31 @@ void highestRated(movie** head, int size)
 //show the title and year of release of all movies in a specific language
 void specificLanguage(movie** head, int size)
 {
+  movie* curr = *head
+  char lan[MAX];
+  bool ifMovie = false;
 
+  printf("Enter the language for which you want to see movies: ");
+  scanf("%s", &lang);
+
+  //loop through the list
+  for(int i = 0; i < size; i++)
+  {
+    if(strstr(curr.languages, lang) != NULL)
+    {
+      printf("%d %s\n", curr.year, curr.title);
+
+      ifMovie = true;
+    }
+    
+    curr = curr->next;
+  }
+
+  //check if there are no movies for the users year
+  if(ifMovie == false)
+  {
+    printf("No data about movies released in %s\n", lang);
+  }
 }
 
 
