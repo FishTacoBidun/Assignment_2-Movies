@@ -19,7 +19,7 @@ struct Node
 }
 
 //function definitions
-int processMovieFile(char* filePath);
+int processMovieFile(char* filePath, Node** head);
 
 int main(void)
 {
@@ -27,12 +27,19 @@ int main(void)
   Node* head = NULL;
   int size;
 
+  size = proccessMovieFile("movies_sample_1.csv", &head)
+  
   return 0;
 }
 
 //fills linked list with movie data and prints out some information
 //Uses code from movies.c example code
-int processMovieFile(char* filePath)
+int processMovieFile(char* filePath, Node** head)
 {
-
+  
 }
+
+
+
+
+
