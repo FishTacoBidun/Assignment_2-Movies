@@ -7,7 +7,7 @@
 int MAX = 256;
 
 //linked list
-struct Node
+struct movie
 {
   //movie values
   char title[MAX];
@@ -15,20 +15,20 @@ struct Node
   char languages[MAX];
   double rating;
   
-  Node* next
+  movie* next
 }
 
 //function definitions
-int processMovieFile(char* filePath, Node** head);
+int processMovieFile(char* filePath, movie** head);
 int menu(void);
-void specifiedYear(Node** head, int size);
-void highestRated(Node** head, int size);
-void specificLanguage(Node** head, int size);
+void specifiedYear(movie** head, int size);
+void highestRated(movie** head, int size);
+void specificLanguage(movie** head, int size);
 
 int main(void)
 {
   //variables
-  Node* head = NULL;
+  movie* head = NULL;
   int size;
   int option;
 
@@ -64,7 +64,7 @@ int main(void)
 
 //fills linked list with movie data and prints out some information
 //Uses code from movies.c example code
-int processMovieFile(char* filePath, Node** head)
+int processMovieFile(char* filePath, movie** head)
 {
   char* currLine = NULL;
   size_t len = 0;
@@ -81,8 +81,8 @@ int processMovieFile(char* filePath, Node** head)
   getline(&currLine, &len, movieFile);
 
   while ((read = getline(&currLine, &len, movieFile)) != -1) {
-        Node* newNode = malloc(sizeof(Node));
-        if (!newNode) {
+        movie* newmovie = malloc(sizeof(movie));
+        if (!newmovie) {
             perror("Memory allocation failed");
             exit(EXIT_FAILURE);
         }
@@ -94,27 +94,27 @@ int processMovieFile(char* filePath, Node** head)
 
         //parse line: title, year, languages, rating
         char* token = strtok(currLine, ",");
-        strncpy(newNode->title, token, MAX);
+        strncpy(newmovie->title, token, MAX);
 
         token = strtok(NULL, ",");
-        newNode->year = atoi(token);
+        newmovie->year = atoi(token);
 
         token = strtok(NULL, ",");
-        strncpy(newNode->languages, token, MAX);
+        strncpy(newmovie->languages, token, MAX);
 
         token = strtok(NULL, ",");
-        newNode->rating = atof(token);
+        newmovie->rating = atof(token);
 
-        newNode->next = NULL;
+        newmovie->next = NULL;
 
-        //insert node at end of list
+        //insert movie at end of list
         if (*head == NULL) {
-            *head = newNode;
+            *head = newmovie;
         } else {
-            Node* temp = *head;
+            movie* temp = *head;
             while (temp->next != NULL)
                 temp = temp->next;
-            temp->next = newNode;
+            temp->next = newmovie;
         }
 
         count++;
@@ -144,19 +144,40 @@ int menu(void)
 }
 
 //show movies released in the specified year
-void specifiedYear(Node** head, int size)
+void specifiedYear(movie** head, int size)
 {
+  movie* curr = head
+  int year;
+  bool ifMovie = false;
 
+  printf("Enter the year for which you want to see movies: ");
+  scanf("%d", &year);
+
+  for(int i = 0; i < size; i++)
+  {
+    if(curr.year == year)
+    {
+      printf("%s\n", curr.title);
+
+      curr = curr->next;
+      ifMovie = true;
+    }
+  }
+
+  if(ifMovie == false)
+  {
+    printf("No data about movies released in the year %d\n", year);
+  }
 }
 
 //show highest rated movie for each year
-void highestRated(Node** head, int size)
+void highestRated(movie** head, int size)
 {
 
 }
 
 //show the title and year of release of all movies in a specific language
-void specificLanguage(Node** head, int size)
+void specificLanguage(movie** head, int size)
 {
 
 }
