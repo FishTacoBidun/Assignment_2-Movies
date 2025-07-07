@@ -44,7 +44,7 @@ int main(void)
     {
       printf("You entered an incorrect choice. Try again.\n");
     }
-    //run users options
+    //run users option
     if(option == 1)
     {
       specifiedYear(&head, size);
@@ -94,16 +94,16 @@ int processMovieFile(char* filePath, movie** head)
 
         //parse line: title, year, languages, rating
         char* token = strtok(currLine, ",");
-        strncpy(newmovie->title, token, MAX);
+        strncpy(newmovie.title, token, MAX);
 
         token = strtok(NULL, ",");
-        newmovie->year = atoi(token);
+        newmovie.year = atoi(token);
 
         token = strtok(NULL, ",");
-        strncpy(newmovie->languages, token, MAX);
+        strncpy(newmovie.languages, token, MAX);
 
         token = strtok(NULL, ",");
-        newmovie->rating = atof(token);
+        newmovie.rating = atof(token);
 
         newmovie->next = NULL;
 
@@ -150,6 +150,7 @@ void specifiedYear(movie** head, int size)
   int year;
   bool ifMovie = false;
 
+  //get user input
   printf("Enter the year for which you want to see movies: ");
   scanf("%d", &year);
 
@@ -176,7 +177,65 @@ void specifiedYear(movie** head, int size)
 //show highest rated movie for each year
 void highestRated(movie** head, int size)
 {
+ movie* curr = *head;
+ movie* topMovies = NULL;
 
+    while (curr != NULL)
+    {
+        movie* search = topMovies;
+        bool found = false;
+
+        while (search != NULL)
+        {
+            if (search->year == curr->year)
+            {
+                found = true;
+                //compare ratings, update if current movie is better
+                if (curr.rating > search.rating)
+                {
+                    strncpy(search.title, curr.title, MAX);
+                    strncpy(search.languages, curr.languages, MAX);
+                    search.rating = curr.rating;
+                }
+                break;
+            }
+            search = search->next;
+        }
+
+        //if no movie recorded for this year yet, add it to topMovies list
+        if (!found)
+        {
+            movie* newNode = malloc(sizeof(struct movie));
+            if (!newNode) {
+                perror("Memory allocation failed");
+                exit(EXIT_FAILURE);
+            }
+            strncpy(newNode.title, curr.title, MAX);
+            strncpy(newNode.languages, curr.languages, MAX);
+            newNode.year = curr.year;
+            newNode.rating = curr.rating;
+            newNode.next = topMovies;
+            topMovies = newNode;
+        }
+
+        curr = curr->next;
+    }
+
+    //print the top rated movie for each year
+    movie* printer = topMovies;
+    while (printer != NULL)
+    {
+        printf("%d %.1f %s\n", printer.year, printer.rating, printer.title);
+        printer = printer->next;
+    }
+
+    //free the topMovies list
+    while (topMovies != NULL)
+    {
+        movie* temp = topMovies;
+        topMovies = topMovies->next;
+        free(temp);
+    }
 }
 
 //show the title and year of release of all movies in a specific language
@@ -186,6 +245,7 @@ void specificLanguage(movie** head, int size)
   char lan[MAX];
   bool ifMovie = false;
 
+  //get user input
   printf("Enter the language for which you want to see movies: ");
   scanf("%s", &lang);
 
@@ -202,7 +262,7 @@ void specificLanguage(movie** head, int size)
     curr = curr->next;
   }
 
-  //check if there are no movies for the users year
+  //check if there are no movies for the users language
   if(ifMovie == false)
   {
     printf("No data about movies released in %s\n", lang);
