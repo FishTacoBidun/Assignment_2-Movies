@@ -20,6 +20,10 @@ struct Node
 
 //function definitions
 int processMovieFile(char* filePath, Node** head);
+int menu(void);
+void specifiedYear(Node** head, int size);
+void highestRated(Node** head, int size);
+void specificLanguage(Node** head, int size);
 
 int main(void)
 {
@@ -92,12 +96,44 @@ int processMovieFile(char* filePath, Node** head)
 
     free(currLine);
     fclose(movieFile);
-    printf("Processed file %s\n", filePath);
+    printf("Processed file %s and parsed data for %d movies\n", filePath, count);
   
     return count;
 }
 
+//get menu option
+int menu(void)
+{
+  int option;
 
+  printf("1. Show movies released in the specified year\n");
+  printf("2. Show highest rated movie for each year\n");
+  printf("3. Show the title and year of release of all movies in a specific language\n");
+  printf("4. Exit from the program\n");
+
+  printf("\nEnter a choice from 1 to 4: ");
+  scanf("%d", &option);
+
+  return option;
+}
+
+//show movies released in the specified year
+void specifiedYear(Node** head, int size)
+{
+
+}
+
+//show highest rated movie for each year
+void highestRated(Node** head, int size)
+{
+
+}
+
+//show the title and year of release of all movies in a specific language
+void specificLanguage(Node** head, int size)
+{
+
+}
 
 
 
