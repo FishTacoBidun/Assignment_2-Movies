@@ -30,9 +30,35 @@ int main(void)
   //variables
   Node* head = NULL;
   int size;
+  int option;
 
-  size = proccessMovieFile("movies_sample_1.csv", &head)
-  
+  size = proccessMovieFile("movies_sample_1.csv", &head);
+
+  do 
+  {
+    //get users option
+    option = menu();
+
+    //error message
+    if(option > 4 || option < 1)
+    {
+      printf("You entered an incorrect choice. Try again.\n");
+    }
+    //run users options
+    if(option == 1)
+    {
+      specifiedYear(&head, size);
+    }
+    if(option == 2)
+    {
+      highestRated(&head, size);
+    }
+    if(option == 3)
+    {
+      specificLanguage(&head, size);
+    }
+  } while(option != 4);
+
   return 0;
 }
 
@@ -101,12 +127,12 @@ int processMovieFile(char* filePath, Node** head)
     return count;
 }
 
-//get menu option
+//prints and gets menu option
 int menu(void)
 {
   int option;
 
-  printf("1. Show movies released in the specified year\n");
+  printf("\n1. Show movies released in the specified year\n");
   printf("2. Show highest rated movie for each year\n");
   printf("3. Show the title and year of release of all movies in a specific language\n");
   printf("4. Exit from the program\n");
