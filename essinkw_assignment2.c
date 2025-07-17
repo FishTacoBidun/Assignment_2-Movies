@@ -24,6 +24,7 @@ int processMovieFile(char* filePath, struct movie** head);
 int menu(void);
 void specifiedYear(struct movie** head, int size);
 void highestRated(struct movie** head, int size);
+struct movie* reverseList(struct movie* head);
 void specificLanguage(struct movie** head, int size);
 
 int main(void)
@@ -78,7 +79,7 @@ int processMovieFile(char* filePath, struct movie** head)
       return 0;
   }
 
-  // skip header line
+  //skip header line
   getline(&currLine, &len, movieFile);
 
    while ((read = getline(&currLine, &len, movieFile)) != -1) 
@@ -96,7 +97,7 @@ int processMovieFile(char* filePath, struct movie** head)
           currLine[strlen(currLine)-1] = '\0';
       }
 
-      //parse line: title, year, languages, rating
+      //parse line for movie data
       char* token = strtok(currLine, ",");
       strncpy(newmovie->title, token, MAX);
 
@@ -199,7 +200,8 @@ void highestRated(struct movie** head, int size)
             if (search->year == curr->year)
             {
                 found = true;
-                //compare ratings, update if current movie is better
+                
+                //compare ratings and update if current movie is better
                 if (curr->rating > search->rating)
                 {
                     strncpy(search->title, curr->title, MAX);
@@ -211,11 +213,12 @@ void highestRated(struct movie** head, int size)
             search = search->next;
         }
 
-        //if no movie recorded for this year yet, add it to topMovies list
+        //if no movie recorded for this year yet add it to topMovies list
         if (!found)
         {
             struct movie* newNode = malloc(sizeof(struct movie));
-            if (!newNode) {
+            if (!newNode) 
+            {
                 perror("Memory allocation failed");
                 exit(EXIT_FAILURE);
             }
@@ -230,8 +233,11 @@ void highestRated(struct movie** head, int size)
         curr = curr->next;
     }
 
-    //print the top rated movie for each year
+    //reverse list to fit with output criteria
+    topMovies = reverseList(topMovies);
     struct movie* printer = topMovies;
+    
+    //print the top rated movie for each year
     while (printer != NULL)
     {
         printf("%d %.1f %s\n", printer->year, printer->rating, printer->title);
@@ -245,6 +251,22 @@ void highestRated(struct movie** head, int size)
         topMovies = topMovies->next;
         free(temp);
     }
+}
+
+//reverses a list
+struct movie* reverseList(struct movie* head) 
+{
+    struct movie* prev = NULL;
+    struct movie* curr = head;
+    while (curr != NULL) 
+    {
+        struct movie* next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+    
+    return prev;
 }
 
 //show the title and year of release of all movies in a specific language
