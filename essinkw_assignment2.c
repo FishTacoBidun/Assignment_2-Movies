@@ -4,7 +4,7 @@
 #include <math.h>
 
 //constants
-#define MAX = 256;
+#define MAX 256;
 
 //linked list
 struct movie
@@ -15,8 +15,8 @@ struct movie
   char languages[MAX];
   double rating;
   
-  movie* next;
-}
+  struct movie* next;
+};
 
 //function definitions
 int processMovieFile(char* filePath, struct movie** head);
@@ -94,16 +94,16 @@ int processMovieFile(char* filePath, struct movie** head)
 
         //parse line: title, year, languages, rating
         char* token = strtok(currLine, ",");
-        strncpy(newmovie.title, token, MAX);
+        strncpy(newmovie->title, token, MAX);
 
         token = strtok(NULL, ",");
-        struct newmovie.year = atoi(token);
+        newmovie->year = atoi(token);
 
         token = strtok(NULL, ",");
-        strncpy(newmovie.languages, token, MAX);
+        strncpy(newmovie->languages, token, MAX);
 
         token = strtok(NULL, ",");
-        newmovie.rating = atof(token);
+        newmovie->rating = atof(token);
 
         newmovie->next = NULL;
 
@@ -111,9 +111,13 @@ int processMovieFile(char* filePath, struct movie** head)
         if (*head == NULL) {
             *head = newmovie;
         } else {
-            movie* temp = *head;
+            struct movie* temp = *head;
+
             while (temp->next != NULL)
+            {
                 temp = temp->next;
+            }
+
             temp->next = newmovie;
         }
 
@@ -157,9 +161,9 @@ void specifiedYear(struct movie** head, int size)
   //loop through the list
   for(int i = 0; i < size; i++)
   {
-    if(curr.year == year)
+    if(curr->year == year)
     {
-      printf("%s\n", curr.title);
+      printf("%s\n", curr->title);
 
       ifMovie = true;
     }
@@ -225,7 +229,7 @@ void highestRated(struct movie** head, int size)
     struct movie* printer = topMovies;
     while (printer != NULL)
     {
-        printf("%d %.1f %s\n", printer.year, printer.rating, printer.title);
+        printf("%d %.1f %s\n", printer->year, printer->rating, printer->title);
         printer = printer->next;
     }
 
@@ -242,7 +246,7 @@ void highestRated(struct movie** head, int size)
 void specificLanguage(struct movie** head, int size)
 {
   struct movie* curr = *head;
-  char lan[MAX];
+  char lang[MAX];
   bool ifMovie = false;
 
   //get user input
@@ -252,9 +256,9 @@ void specificLanguage(struct movie** head, int size)
   //loop through the list
   for(int i = 0; i < size; i++)
   {
-    if(strstr(curr.languages, lang) != NULL)
+    if(strstr(curr->languages, lang) != NULL)
     {
-      printf("%d %s\n", curr.year, curr.title);
+      printf("%d %s\n", curr->year, curr->title);
 
       ifMovie = true;
     }
