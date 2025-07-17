@@ -165,7 +165,7 @@ void specifiedYear(struct movie** head, int size)
   scanf("%d", &year);
 
   //loop through the list
-  while(curr->next != NULL)
+  while(curr != NULL)
   {
     if(curr->year == year)
     {
@@ -281,7 +281,7 @@ void specificLanguage(struct movie** head, int size)
   scanf("%s", &lang);
 
   //loop through the list
-  while(curr->next != NULL)
+  while(curr != NULL)
   {
     if(strstr(curr->languages, lang) != NULL)
     {
