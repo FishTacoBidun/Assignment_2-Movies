@@ -199,11 +199,11 @@ void highestRated(struct movie** head, int size)
             {
                 found = true;
                 //compare ratings, update if current movie is better
-                if (curr.rating > search.rating)
+                if (curr->rating > search->rating)
                 {
-                    strncpy(search.title, curr.title, MAX);
-                    strncpy(search.languages, curr.languages, MAX);
-                    search.rating = curr.rating;
+                    strncpy(search->title, curr->title, MAX);
+                    strncpy(search->languages, curr->languages, MAX);
+                    search->rating = curr->rating;
                 }
                 break;
             }
@@ -218,11 +218,11 @@ void highestRated(struct movie** head, int size)
                 perror("Memory allocation failed");
                 exit(EXIT_FAILURE);
             }
-            strncpy(newNode.title, curr.title, MAX);
-            strncpy(newNode.languages, curr.languages, MAX);
-            newNode.year = curr.year;
-            newNode.rating = curr.rating;
-            newNode.next = topMovies;
+            strncpy(newNode->title, curr->title, MAX);
+            strncpy(newNode->languages, curr->languages, MAX);
+            newNode->year = curr->year;
+            newNode->rating = curr->rating;
+            newNode->next = topMovies;
             topMovies = newNode;
         }
 
