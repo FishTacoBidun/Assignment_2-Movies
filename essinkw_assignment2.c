@@ -4,7 +4,7 @@
 #include <math.h>
 
 //constants
-int MAX = 256;
+#define MAX = 256;
 
 //linked list
 struct movie
@@ -19,20 +19,20 @@ struct movie
 }
 
 //function definitions
-int processMovieFile(char* filePath, movie** head);
+int processMovieFile(char* filePath, struct movie** head);
 int menu(void);
-void specifiedYear(movie** head, int size);
-void highestRated(movie** head, int size);
-void specificLanguage(movie** head, int size);
+void specifiedYear(struct movie** head, int size);
+void highestRated(struct movie** head, int size);
+void specificLanguage(struct movie** head, int size);
 
 int main(void)
 {
   //variables
-  movie* head = NULL;
+  struct movie* head = NULL;
   int size;
   int option;
 
-  size = proccessMovieFile("movies_sample_1.csv", &head);
+  size = processMovieFile("movies_sample_1.csv", &head);
 
   do 
   {
@@ -64,7 +64,7 @@ int main(void)
 
 //fills linked list with movie data and prints out some information
 //Uses code from movies.c example code
-int processMovieFile(char* filePath, movie** head)
+int processMovieFile(char* filePath, struct movie** head)
 {
   char* currLine = NULL;
   size_t len = 0;
@@ -81,7 +81,7 @@ int processMovieFile(char* filePath, movie** head)
   getline(&currLine, &len, movieFile);
 
   while ((read = getline(&currLine, &len, movieFile)) != -1) {
-        movie* newmovie = malloc(sizeof(movie));
+        struct movie* newmovie = malloc(sizeof(struct movie));
         if (!newmovie) {
             perror("Memory allocation failed");
             exit(EXIT_FAILURE);
@@ -97,7 +97,7 @@ int processMovieFile(char* filePath, movie** head)
         strncpy(newmovie.title, token, MAX);
 
         token = strtok(NULL, ",");
-        newmovie.year = atoi(token);
+        struct newmovie.year = atoi(token);
 
         token = strtok(NULL, ",");
         strncpy(newmovie.languages, token, MAX);
@@ -144,9 +144,9 @@ int menu(void)
 }
 
 //show movies released in the specified year
-void specifiedYear(movie** head, int size)
+void specifiedYear(struct movie** head, int size)
 {
-  movie* curr = *head
+  struct movie* curr = *head;
   int year;
   bool ifMovie = false;
 
@@ -175,14 +175,14 @@ void specifiedYear(movie** head, int size)
 }
 
 //show highest rated movie for each year
-void highestRated(movie** head, int size)
+void highestRated(struct movie** head, int size)
 {
- movie* curr = *head;
- movie* topMovies = NULL;
+ struct movie* curr = *head;
+ struct movie* topMovies = NULL;
 
     while (curr != NULL)
     {
-        movie* search = topMovies;
+        struct movie* search = topMovies;
         bool found = false;
 
         while (search != NULL)
@@ -205,7 +205,7 @@ void highestRated(movie** head, int size)
         //if no movie recorded for this year yet, add it to topMovies list
         if (!found)
         {
-            movie* newNode = malloc(sizeof(struct movie));
+            struct movie* newNode = malloc(sizeof(struct movie));
             if (!newNode) {
                 perror("Memory allocation failed");
                 exit(EXIT_FAILURE);
@@ -222,7 +222,7 @@ void highestRated(movie** head, int size)
     }
 
     //print the top rated movie for each year
-    movie* printer = topMovies;
+    struct movie* printer = topMovies;
     while (printer != NULL)
     {
         printf("%d %.1f %s\n", printer.year, printer.rating, printer.title);
@@ -232,16 +232,16 @@ void highestRated(movie** head, int size)
     //free the topMovies list
     while (topMovies != NULL)
     {
-        movie* temp = topMovies;
+        struct movie* temp = topMovies;
         topMovies = topMovies->next;
         free(temp);
     }
 }
 
 //show the title and year of release of all movies in a specific language
-void specificLanguage(movie** head, int size)
+void specificLanguage(struct movie** head, int size)
 {
-  movie* curr = *head
+  struct movie* curr = *head;
   char lan[MAX];
   bool ifMovie = false;
 
@@ -268,6 +268,3 @@ void specificLanguage(movie** head, int size)
     printf("No data about movies released in %s\n", lang);
   }
 }
-
-
-
