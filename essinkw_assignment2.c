@@ -272,7 +272,7 @@ void specificLanguage(struct movie** head, int size)
   }
 
   //check if there are no movies for the users language
-  if(ifMovie == true)
+  if(ifMovie == false)
   {
     printf("No data about movies released in %s\n", lang);
   }
