@@ -80,46 +80,50 @@ int processMovieFile(char* filePath, struct movie** head)
   // skip header line
   getline(&currLine, &len, movieFile);
 
-  while ((read = getline(&currLine, &len, movieFile)) != -1) {
-        struct movie* newmovie = malloc(sizeof(struct movie));
-        if (!newmovie) {
-            perror("Memory allocation failed");
-            exit(EXIT_FAILURE);
-        }
+   while ((read = getline(&currLine, &len, movieFile)) != -1) 
+  {
+      struct movie* newmovie = malloc(sizeof(struct movie));
+      if (!newmovie) 
+      {
+          perror("Memory allocation failed");
+          exit(EXIT_FAILURE);
+      }
 
-        //remove newline if present
-        if (currLine[strlen(currLine)-1] == '\n') {
-            currLine[strlen(currLine)-1] = '\0';
-        }
+      //remove newline if present
+      if (currLine[strlen(currLine)-1] == '\n') 
+      {
+          currLine[strlen(currLine)-1] = '\0';
+      }
 
-        //parse line: title, year, languages, rating
-        char* token = strtok(currLine, ",");
-        strncpy(newmovie->title, token, MAX);
+      //parse line: title, year, languages, rating
+      char* token = strtok(currLine, ",");
+      strncpy(newmovie->title, token, MAX);
 
-        token = strtok(NULL, ",");
-        newmovie->year = atoi(token);
+      token = strtok(NULL, ",");
+      newmovie->year = atoi(token);
 
-        token = strtok(NULL, ",");
-        strncpy(newmovie->languages, token, MAX);
+      token = strtok(NULL, ",");
+      strncpy(newmovie->languages, token, MAX);
 
-        token = strtok(NULL, ",");
-        newmovie->rating = atof(token);
+      token = strtok(NULL, ",");
+      newmovie->rating = atof(token);
 
-        newmovie->next = NULL;
+      newmovie->next = NULL;
 
-        //insert movie at end of list
-        if (*head == NULL) {
-            *head = newmovie;
-        } else {
-            struct movie* temp = *head;
+      //insert movie at end of list
+      if (*head == NULL) 
+      {
+          *head = newmovie;
+      } else {
+          struct movie* temp = *head;
 
-            while (temp->next != NULL)
-            {
-                temp = temp->next;
-            }
+          while (temp->next != NULL)
+          {
+              temp = temp->next;
+          }
 
             temp->next = newmovie;
-        }
+      }
 
         count++;
     }
@@ -152,27 +156,27 @@ void specifiedYear(struct movie** head, int size)
 {
   struct movie* curr = *head;
   int year;
-  bool ifMovie = false;
+  int ifMovie = 0;
 
   //get user input
   printf("Enter the year for which you want to see movies: ");
   scanf("%d", &year);
 
   //loop through the list
-  for(int i = 0; i < size; i++)
+  while(curr->next != NULL)
   {
     if(curr->year == year)
     {
       printf("%s\n", curr->title);
 
-      ifMovie = true;
+      ifMovie = 1;
     }
     
     curr = curr->next;
   }
 
   //check if there are no movies for the users year
-  if(ifMovie == false)
+  if(ifMovie == 0)
   {
     printf("No data about movies released in the year %d\n", year);
   }
@@ -247,27 +251,27 @@ void specificLanguage(struct movie** head, int size)
 {
   struct movie* curr = *head;
   char lang[MAX];
-  bool ifMovie = false;
+  int ifMovie = 0;
 
   //get user input
   printf("Enter the language for which you want to see movies: ");
   scanf("%s", &lang);
 
   //loop through the list
-  for(int i = 0; i < size; i++)
+  while(curr->next != NULL)
   {
     if(strstr(curr->languages, lang) != NULL)
     {
       printf("%d %s\n", curr->year, curr->title);
 
-      ifMovie = true;
+      ifMovie = 1;
     }
     
     curr = curr->next;
   }
 
   //check if there are no movies for the users language
-  if(ifMovie == false)
+  if(ifMovie == 1)
   {
     printf("No data about movies released in %s\n", lang);
   }
