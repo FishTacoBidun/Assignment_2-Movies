@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <stdbool.h>
 
 //constants
 #define MAX 256
@@ -156,7 +157,7 @@ void specifiedYear(struct movie** head, int size)
 {
   struct movie* curr = *head;
   int year;
-  int ifMovie = 0;
+  bool ifMovie = false;
 
   //get user input
   printf("Enter the year for which you want to see movies: ");
@@ -169,14 +170,14 @@ void specifiedYear(struct movie** head, int size)
     {
       printf("%s\n", curr->title);
 
-      ifMovie = 1;
+      ifMovie = true;
     }
     
     curr = curr->next;
   }
 
   //check if there are no movies for the users year
-  if(ifMovie == 0)
+  if(ifMovie == false)
   {
     printf("No data about movies released in the year %d\n", year);
   }
@@ -251,7 +252,7 @@ void specificLanguage(struct movie** head, int size)
 {
   struct movie* curr = *head;
   char lang[MAX];
-  int ifMovie = 0;
+  bool ifMovie = false;
 
   //get user input
   printf("Enter the language for which you want to see movies: ");
@@ -264,14 +265,14 @@ void specificLanguage(struct movie** head, int size)
     {
       printf("%d %s\n", curr->year, curr->title);
 
-      ifMovie = 1;
+      ifMovie = true;
     }
     
     curr = curr->next;
   }
 
   //check if there are no movies for the users language
-  if(ifMovie == 1)
+  if(ifMovie == true)
   {
     printf("No data about movies released in %s\n", lang);
   }
