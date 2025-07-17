@@ -4,7 +4,7 @@
 #include <math.h>
 
 //constants
-#define MAX 256;
+#define MAX 256
 
 //linked list
 struct movie
