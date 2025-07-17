@@ -27,14 +27,21 @@ void highestRated(struct movie** head, int size);
 struct movie* reverseList(struct movie* head);
 void specificLanguage(struct movie** head, int size);
 
-int main(void)
+int main(int argc, char** argv)
 {
+
+  if (argc < 2) 
+  {
+      printf("You must provide the name of the file to process\n");
+      return EXIT_FAILURE;
+  }
+
   //variables
   struct movie* head = NULL;
   int size;
   int option;
 
-  size = processMovieFile("movies_sample_1.csv", &head);
+  size = processMovieFile(argv[1], &head);
 
   do 
   {
@@ -204,6 +211,7 @@ void highestRated(struct movie** head, int size)
                 //compare ratings and update if current movie is better
                 if (curr->rating > search->rating)
                 {
+                    search->year = curr->year;
                     strncpy(search->title, curr->title, MAX);
                     strncpy(search->languages, curr->languages, MAX);
                     search->rating = curr->rating;
